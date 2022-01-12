@@ -3,7 +3,7 @@ export class BaseComponent extends HTMLElement {
     super();
     const shadow = this.attachShadow({ mode: "open" });
 
-    // Attach HTML template
+    // Apply HTML template
     this.fetchTemplate()
       .then(templateText => {
         if (document.getElementById(this.hyphenatedClassName()) == null)
