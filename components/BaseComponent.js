@@ -4,11 +4,7 @@ export class BaseComponent extends HTMLElement {
     const shadow = this.attachShadow({ mode: "open" });
 
     // Attach HTML template
-    const fetchString = window.location.href;
-    fetch(fetchString + 'components/' +
-      this.hyphenatedClassName() + '/' + this.hyphenatedClassName()
-      + '.html')
-      .then(templateFile => templateFile.text())
+    this.fetchTemplate()
       .then(templateText => {
         if (document.getElementById(this.hyphenatedClassName()) == null)
           document.body.insertAdjacentHTML('beforebegin', templateText.replace('<template>', '<template id="' + this.hyphenatedClassName() + '">'))
@@ -26,16 +22,15 @@ export class BaseComponent extends HTMLElement {
     shadow.appendChild(linkElem);
   }
 
-  async fetchTemplate() {
-    if (this.constructor.template) {
+  fetchTemplate() {
+    if (this.constructor.template != null) {
       return this.constructor.template;
     }
 
-    const template = await fetch(fetchString + 'components/' +
+    this.constructor.template = fetch(window.location.href + 'components/' +
       this.hyphenatedClassName() + '/' + this.hyphenatedClassName()
       + '.html').then(templateFile => templateFile.text())
-    this.constructor.template = template
-    return template
+    return this.constructor.template
   }
 
   hyphenatedClassName() {
