@@ -1,3 +1,9 @@
 p {
   color: red;
+  margin: 10px;
+}
+
+div {
+  background: pink;
+  padding: 2rem;
 }

@@ -26,6 +26,18 @@ export class BaseComponent extends HTMLElement {
     shadow.appendChild(linkElem);
   }
 
+  async fetchTemplate() {
+    if (this.constructor.template) {
+      return this.constructor.template;
+    }
+
+    const template = await fetch(fetchString + 'components/' +
+      this.hyphenatedClassName() + '/' + this.hyphenatedClassName()
+      + '.html').then(templateFile => templateFile.text())
+    this.constructor.template = template
+    return template
+  }
+
   hyphenatedClassName() {
     /**
      * Splits current class name on capitals, joins with hyphen, 
