@@ -6,10 +6,9 @@ export class BaseComponent extends HTMLElement {
     // Apply HTML template
     this.fetchTemplate()
       .then(templateText => {
-        if (document.getElementById(this.hyphenatedClassName()) == null)
-          document.body.insertAdjacentHTML('beforebegin', templateText.replace('<template>', '<template id="' + this.hyphenatedClassName() + '">'))
+        document.body.insertAdjacentHTML('beforebegin', templateText.replace('<template>', '<template id="' + this.hyphenatedClassName() + '">'))
       })
-      .then(x => {
+      .then(() => {
         const template = document.getElementById(this.hyphenatedClassName()).content;
         shadow.appendChild(template.cloneNode(true));
       });
@@ -27,8 +26,8 @@ export class BaseComponent extends HTMLElement {
       return this.constructor.template;
     }
 
-    this.constructor.template = fetch(window.location.href + 'components/' +
-      this.hyphenatedClassName() + '/' + this.hyphenatedClassName()
+    this.constructor.template = fetch(window.location.href + 'components/'
+      + this.hyphenatedClassName() + '/' + this.hyphenatedClassName()
       + '.html').then(templateFile => templateFile.text())
     return this.constructor.template
   }
